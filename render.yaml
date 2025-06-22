@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: lostandfound-backend
+    env: java
+    branch: master
+    buildCommand: "./mvnw package"
+    startCommand: "java -jar target/*.jar"
+    region: singapore
+    plan: free
