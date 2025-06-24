@@ -7,14 +7,20 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class CorsConfig {
-
     @Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins("*") // Allow all origins, or specify your frontend URL
+                        .allowedOrigins(
+                                "http://localhost:5173",
+                                "http://localhost:3000",
+                                "http://127.0.0.1:5173",
+                                "http://127.0.0.1:3000",
+                                "https://lostandfound-production-a7ee.up.railway.app", // Swagger UI
+                                "https://your-frontend.vercel.app" // Your deployed frontend
+                        )
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("*")
                         .allowCredentials(true);
@@ -22,3 +28,4 @@ public class CorsConfig {
         };
     }
 }
+
