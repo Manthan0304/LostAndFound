@@ -1,5 +1,6 @@
-package com.lostandfound;
+package com.lostandfound.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
@@ -7,21 +8,30 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class CorsConfig {
-
+    
+    @Value("${app.frontend.url:http://localhost:3000}")
+    private String frontendUrl;
+    
     @Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                    .allowedOrigins(
-                        "http://localhost:5173",        // Frontend in dev
-                        "http://127.0.0.1:5173",        // Another dev URL
-                        "https://your-frontend.com"     // Deployed frontend
-                    )
-                    .allowedMethods("*")
-                    .allowedHeaders("*")
-                    .allowCredentials(true);
+                        .allowedOrigins(
+                                "http://localhost:3000",
+                                "http://localhost:5173", 
+                                "http://127.0.0.1:3000",
+                                "http://127.0.0.1:5173",
+                                "https://lostandfound-production-a7ee.up.railway.app", // Your backend URL
+                                "https://your-frontend.vercel.app", // Replace with actual frontend URL
+                                "https://*.vercel.app" // Allow all Vercel preview deployments
+                        )
+                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH")
+                        .allowedHeaders("*")
+                        .exposedHeaders("Authorization", "Content-Type", "X-Total-Count")
+                        .allowCredentials(true)
+                        .maxAge(3600); // Cache preflight response for 1 hour
             }
         };
     }
