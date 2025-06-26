@@ -19,13 +19,24 @@ public class CorsConfig {
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
                         .allowedOrigins(
+                                // Local development
                                 "http://localhost:3000",
                                 "http://localhost:5173", 
                                 "http://127.0.0.1:3000",
                                 "http://127.0.0.1:5173",
-                                "https://lostandfound-production-a7ee.up.railway.app", // Your backend URL
-                                "https://your-frontend.vercel.app", // Replace with actual frontend URL
-                                "https://*.vercel.app" // Allow all Vercel preview deployments
+                                
+                                // v0 preview URLs
+                                "https://*.lite.vusercontent.net",
+                                
+                                // Vercel deployments
+                                "https://*.vercel.app",
+                                
+                                // Your specific frontend URL
+                                frontendUrl,
+                                
+                                // Add your actual production frontend URL here
+                                "https://your-frontend.vercel.app",
+                                "https://lostandfound-production-a7ee.up.railway.app" // Your backend URL
                         )
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH")
                         .allowedHeaders("*")
