@@ -7,23 +7,22 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class CorsConfig {
+
     @Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOriginPatterns(
-                                "http://localhost:*",
-                                "http://127.0.0.1:*",
-                                "https://lostandfound-production-a7ee.up.railway.app",
-                                "https://your-frontend.vercel.app"
-                        )
-                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
-                        .allowedHeaders("*")
-                        .allowCredentials(true);
+                    .allowedOrigins(
+                        "http://localhost:5173",        // Frontend in dev
+                        "http://127.0.0.1:5173",        // Another dev URL
+                        "https://your-frontend.com"     // Deployed frontend
+                    )
+                    .allowedMethods("*")
+                    .allowedHeaders("*")
+                    .allowCredentials(true);
             }
         };
     }
 }
-
